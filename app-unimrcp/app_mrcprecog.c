@@ -1502,13 +1502,14 @@ static int app_recog_exec(struct ast_channel *chan, ast_app_data data)
         fileName[ri] = alphanum[rand() % (sizeof(alphanum) - 1)];
     }
 
+	FILE *recogFile;
     fileName[32] = 0;
 	
 	sprintf(resFile, "/tmp/%s", fileName);
 	
-	if ((f = fopen(resFile, "a"))) {
-		fprintf(f, "%s\n", result ? result : "");
-		fclose(f);
+	if ((recogFile = fopen(resFile, "w"))) {
+		fprintf(recogFile, "%s\n", result ? result : "");
+		fclose(recogFile);
 		pbx_builtin_setvar_helper(chan, "RECOG_RESULT_FILE", resFile);
 	}
 	
