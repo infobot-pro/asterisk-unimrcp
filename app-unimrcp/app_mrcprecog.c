@@ -1498,11 +1498,11 @@ static int app_recog_exec(struct ast_channel *chan, ast_app_data data)
         "abcdefghijklmnopqrstuvwxyz";
 
 	int ri = 0;	
-    for (ri = 0; ri < len; ++ri) {
+    for (ri = 0; ri < 32; ++ri) {
         fileName[ri] = alphanum[rand() % (sizeof(alphanum) - 1)];
     }
 
-    fileName[len] = 0;
+    fileName[32] = 0;
 	
 	sprintf(resFile, "/tmp/%s", fileName);
 	
