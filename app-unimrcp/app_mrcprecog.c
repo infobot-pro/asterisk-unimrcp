@@ -1489,8 +1489,8 @@ static int app_recog_exec(struct ast_channel *chan, ast_app_data data)
 	if (completion_cause)
 		pbx_builtin_setvar_helper(chan, "RECOG_COMPLETION_CAUSE", completion_cause);
 
-	char resFile[256];
-	char *fileName;
+	char resFile[42];
+	char fileName[34];
 	
 	static const char alphanum[] =
         "0123456789"
@@ -1506,6 +1506,7 @@ static int app_recog_exec(struct ast_channel *chan, ast_app_data data)
     fileName[32] = 0;
 	
 	sprintf(resFile, "/tmp/%s", fileName);
+	ast_log(LOG_DEBUG, "RECOG_RESULT_FILE = %s\n", fileName);
 	
 	if ((recogFile = fopen(resFile, "w"))) {
 		fprintf(recogFile, "%s\n", result ? result : "");
