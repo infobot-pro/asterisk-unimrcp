@@ -1489,6 +1489,28 @@ static int app_recog_exec(struct ast_channel *chan, ast_app_data data)
 	if (completion_cause)
 		pbx_builtin_setvar_helper(chan, "RECOG_COMPLETION_CAUSE", completion_cause);
 
+	char resFile[256];
+	char *fileName;
+	
+	static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    for (int i = 0; i < len; ++i) {
+        fileName[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+
+    fileName[len] = 0;
+	
+	sprintf(resFile, "/tmp/%s", fileName);
+	
+	if ((f = fopen(resFile, "a"))) {
+		fprintf(f, "%s\n", result ? result : "");
+		fclose(f);
+		pbx_builtin_setvar_helper(chan, "RECOG_RESULT_FILE", resFile);
+	}
+	
 	/* Result may not be available if recognition completed with nomatch, noinput, or other error cause. */
 	pbx_builtin_setvar_helper(chan, "RECOG_RESULT", result ? result : "");
 
