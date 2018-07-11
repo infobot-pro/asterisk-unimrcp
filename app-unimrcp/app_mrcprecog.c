@@ -1497,7 +1497,8 @@ static int app_recog_exec(struct ast_channel *chan, ast_app_data data)
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
 
-    for (int ri = 0; ri < len; ++ri) {
+	int ri = 0;	
+    for (ri = 0; ri < len; ++ri) {
         fileName[ri] = alphanum[rand() % (sizeof(alphanum) - 1)];
     }
 
